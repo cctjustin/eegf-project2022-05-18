@@ -12,7 +12,7 @@ face_width = []
 print("Calibration required. Please keep your face at the position you would like to keep.")
 
 c = 0
-while c <= 3:
+while True:
     # Read the video capture
     ret, frame = cap.read()
     # Turn it gray
@@ -32,8 +32,8 @@ while c <= 3:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
         face_width.append(w)
     cv2.imshow("Video", frame)
-    time.sleep(1)
-    c += 1
+    if len(face_width) >= 30:
+        break
 
 cap.release()
 cv2.destroyAllWindows()
@@ -41,7 +41,7 @@ print(face_width)
 cal_val = sum(face_width)/len(face_width)
 print(cal_val)
 face_width = []
-time.sleep(3)
+time.sleep(1)
 
 cap = cv2.VideoCapture(0)
 while True:
