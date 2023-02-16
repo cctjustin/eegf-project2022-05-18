@@ -107,16 +107,16 @@ while True:
         if disappear:
             disappear = False
             start = time.time()
-            rest[key]['Length of rest'] = time.time() - time_storage[key - 1]
+            rest[key]['Length of rest'] = str(round(time.time() - time_storage[key - 1],1)) + ' seconds'
     else:
         # define disappear
         if disappear_time == 0:
             disappear_time = time.time()
             # print(time.time() - disappear_time)
-    if time.time() - disappear_time > 10 and disappear == False:
+    if (15 > time.time() - disappear_time > 10) and not disappear:
         disappear = True
         key += 1
-        rest[key] = {'Start time:':time.ctime(), 'Length of rest:': 0}
+        rest[key] = {'Start time':time.ctime(), 'Length of rest': 0}
         time_storage.append(time.time())
 
 
