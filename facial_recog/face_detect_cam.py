@@ -125,4 +125,5 @@ while True:
     # Press q to quit
 cap.release()
 cv2.destroyAllWindows()
+print(rest)
 
