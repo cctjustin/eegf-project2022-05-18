@@ -13,9 +13,12 @@ faceCascade = cv2.CascadeClassifier(cascPath)
 
 cap = cv2.VideoCapture(0)
 face_width = []
+rest = {}
+key = 0
+time_storage = []
 cal_length = float(input("Please insert the distance you would like to keep from the screen (in cm): "))
 real_width = float(input("Please insert your face width (in cm): "))
-rest_length = float(input("Please insert the length of time for 1 period (in mins): "))
+rest_length = float(input("Please insert the length of time for 1 period (in mins): ")) * 60
 print("Calibration required. Please keep your face at the position you would like to keep.")
 
 c = 0
@@ -104,13 +107,18 @@ while True:
         if disappear:
             disappear = False
             start = time.time()
+            rest[key]['Length of rest'] = time.time() - time_storage[key - 1]
     else:
         # define disappear
         if disappear_time == 0:
             disappear_time = time.time()
             # print(time.time() - disappear_time)
-    if 600 > time.time() - disappear_time > 10:
+    if time.time() - disappear_time > 10 and disappear == False:
         disappear = True
+        key += 1
+        rest[key] = {'Start time:':time.ctime(), 'Length of rest:': 0}
+        time_storage.append(time.time())
+
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
